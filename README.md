@@ -1,3 +1,5 @@
+# EN PROGRESO
+
 # Big data en Google Cloud
 
 Tutorial de implementación de una arquitectura de adquisición, procesamiento, almacenamiento y análisis de datos en Google Cloud.
@@ -24,10 +26,10 @@ El sistema simulará una arquitectura de adquisición y análisis de datos de un
 
 ## Activa las APIs
 
-En el menú, selecciona "APIs & Services > Library" y activa las siguientes APIs:
+En el menú, selecciona "APIs & Services > Library" y activa las siguientes APIs si no lo están:
 
 - Google Compute Engine APIs
-- Google Clou Pub/Sub API
+- Google Cloud Pub/Sub API
 - Google Cloud Storage
 - Google Dataflow API
 - BigQuery API
@@ -51,31 +53,32 @@ Haz click en el icono de Cloud Shell en el menú superior:
 - Establece una zona y region por defecto:
 
 ```
-gcloud config set compute/zone europe-west1
-gcloud config set compute/region europe-west1-b
+gcloud config set compute/region europe-west1
+gcloud config set compute/zone europe-west1-b
 ```
 
 ## Clonar repositorio
 
 En tu terminal de Cloud Shell, clona este repositorio y accede al mismo:
 
-`git clone XXX`
-
-`cd XXX`
+```
+git clone https://github.com/GDG-Almeria/big-data-en-google-cloud
+cd big-data-en-google-cloud
+```
 
 ## Crea una cuenta de servicio
 
-- En el menú "APIs & Services > Credentials", pulsa "Crear credencial", "Service account key", "New service account", selecciona de tipo "JSON" y pulsa crear.
+- En el menú "APIs & Services > Credentials", pulsa "Create credential", "Service account key", "New service account". Dale un nombre, rol de "project > owner", selecciona de tipo "JSON" y pulsa crear.
 
-- Se descargará un archivo de tipo JSON.
+- Se descargará un archivo de tipo JSON en tu navegador.
 
 - Abre el editor de texto de Cloud Shell.
 
-- Crea un nuevo archivo de nombre `credentials.json` en la carpeta actual (dentro del repositorio), copia el contenido del archivo descargado y guárdalo.
+- Crea un nuevo archivo de nombre `credentials.json` en la carpeta actual (dentro del repositorio), copia en él el contenido del archivo descargado y guárdalo.
 
 - Crea la variable de entorno `GOOGLE_APPLICATION_CREDENTIALS` con el valor del path al archivo `credentials.json`, p. ej.:
 
-`export GOOGLE_APPLICATION_CREDENTIALS="/home/info/XXX/service-account-file.json"`
+`export GOOGLE_APPLICATION_CREDENTIALS="/home/info/big-data-en-google-cloud/credentials.json"`
 
 Puedes usar el comando `pwd` para determinar el path del directorio actual.
 
@@ -85,7 +88,7 @@ Puedes usar el comando `pwd` para determinar el path del directorio actual.
 
 ## Crea una suscripción de Cloud Pub/Sub
 
-`gcloud pubsub subscriptions create subscripcion-datos --topic fuente-datos`
+`gcloud pubsub subscriptions create suscripcion-datos --topic fuente-datos`
 
 ## Comprueba la publicación y recepción de mensajes
 
@@ -106,7 +109,7 @@ Descripción
 
 ## Crea una VM como fuente de datos
 
-- Crea una VM siguiendo los pasos (https://cloud.google.com/compute/docs/instances/create-start-instance#publicimage) con la siguiente configuración:
+- Crea una VM desde la consola (https://cloud.google.com/compute/docs/instances/create-start-instance#publicimage) con la siguiente configuración:
   - Nombre: cualquiera
   - Región: europe-west1
   - Zona: europe-west1-b
@@ -121,8 +124,8 @@ Descripción
 - Clona el repositorio en la instancia:
 
 ```
-git clone XXX
-cd XXX
+git clone https://github.com/GDG-Almeria/big-data-en-google-cloud
+cd big-data-en-google-cloud
 ```
 
 - Crea un nuevo archivo de nombre `credentials.json` en la carpeta actual (dentro del repositorio), copia el contenido del archivo descargado y guárdalo.
@@ -131,13 +134,17 @@ cd XXX
 
 - Crea la variable de entorno `GOOGLE_APPLICATION_CREDENTIALS` con el valor del path al archivo `credentials.json`, p. ej.:
 
-`export GOOGLE_APPLICATION_CREDENTIALS="/home/info/XXX/service-account-file.json"`
+`export GOOGLE_APPLICATION_CREDENTIALS="/home/info/big-data-en-google-cloud/credentials.json"`
+
+- Instala la librería para Python de Google Cloud:
+
+`pip3 install --user google-cloud-pubsub`
 
 ## Comienza la publicación de datos
 
 - Ejecuta el script de Python:
 
-`python3 data_publish.py`
+`python3 data_publish.py TU_ID_PROYECTO_GCP fuente-datos`
 
 - Comprueba la recepción de mensajes:
 
@@ -158,10 +165,6 @@ Descripción
 Descripción
 
 ## Analiza los datos con Cloud Datalab
-
-Descripción
-
-## Crea un cuadro de mandos con Cloud Data Studio
 
 Descripción
 
